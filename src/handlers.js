@@ -117,7 +117,7 @@ async function updateAliasHandler(request, reply) {
   // TODO: to reduce the payload size, should we send success-no-content response with no-content?
   reply.code(200).send({
     success: true,
-    data: { ...updatedRecord, alias: newAlias ?? alias },
+    data: { ttlSeconds: updatedRecord.ttlSeconds, alias: newAlias ?? alias },
   });
 }
 
