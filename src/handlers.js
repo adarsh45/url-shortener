@@ -1,5 +1,5 @@
 import DB from "./db.js";
-import { FRESH_ANALYTICS_DATA } from "./static.js";
+import { DEFAULT_TTL, FRESH_ANALYTICS_DATA } from "./static.js";
 import {
   createNewAlias,
   generateRandomAlias,
@@ -11,7 +11,7 @@ async function shortenURLHandler(request, reply) {
   const body = request.body;
   const {
     long_url: longURL,
-    ttl_seconds: ttlSeconds = 120,
+    ttl_seconds: ttlSeconds = DEFAULT_TTL,
     custom_alias: customAlias,
   } = body;
 
