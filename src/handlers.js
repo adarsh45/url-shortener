@@ -1,5 +1,5 @@
 import DB from "./db.js";
-import { DEFAULT_TTL, FRESH_ANALYTICS_DATA } from "./static.js";
+import { BASE_URL, DEFAULT_TTL, FRESH_ANALYTICS_DATA } from "./static.js";
 import {
   createNewAlias,
   generateRandomAlias,
@@ -38,8 +38,10 @@ async function shortenURLHandler(request, reply) {
     return;
   }
 
+  const shortURL = `${BASE_URL}/${alias}`;
+
   reply.code(200).send({
-    short_url: alias,
+    short_url: shortURL,
   });
 }
 
