@@ -11,19 +11,19 @@ const app = Fastify({
   logger: true,
 });
 
-app.post("/shorten", shortenURLHandler);
+app.post("/shorten", { handler: shortenURLHandler });
 
 // GET long url
-app.get("/:alias", getLongUrl);
+app.get("/:alias", { handler: getLongUrl });
 
 // GET analytics
-app.get("/analytics/:alias", getAnalyticsHandler);
+app.get("/analytics/:alias", { handler: getAnalyticsHandler });
 
 // PUT update alias and TTL
-app.put("/update/:alias", updateAliasHandler);
+app.put("/update/:alias", { handler: updateAliasHandler });
 
 // DELETE delete alias
-app.delete("/delete/:alias", deleteAliasHandler);
+app.delete("/delete/:alias", { handler: deleteAliasHandler });
 
 async function run() {
   try {
