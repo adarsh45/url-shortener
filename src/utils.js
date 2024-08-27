@@ -6,7 +6,10 @@ function createNewAlias(alias, ttlSeconds, longURL) {
     createdAt: new Date(),
     ttlSeconds,
     longURL,
-    analyticsData: FRESH_ANALYTICS_DATA,
+    analyticsData: {
+      accessCount: 0,
+      accessTimes: [],
+    },
   };
 
   DB[alias] = record;
@@ -32,13 +35,9 @@ function processPassiveDeletion(alias, currentTime = new Date()) {
 
   const ttlSeconds = record.ttlSeconds;
   const creationTime = record.createdAt;
+  const diffInSeconds = (currentTime - creationTime) / 1000;
 
-  const currentTimeSeconds = currentTime.getSeconds();
-  const creationTimeSeconds = creationTime.getSeconds();
-
-  const difference = currentTimeSeconds - creationTimeSeconds;
-  const isExpired = difference > ttlSeconds;
-
+  const isExpired = diffInSeconds > ttlSeconds;
   if (!isExpired) return;
 
   delete DB[alias];
@@ -51,7 +50,7 @@ function getLongURLForAlias(alias, currentTime) {
   const record = DB[alias];
 
   const accessTimesList = record.analyticsData.accessTimes;
-  accessTimesList.push(currentTime);
+  accessTimesList.push(currentTime.toISOString());
 
   const updatedRecord = {
     ...record,
